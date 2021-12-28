@@ -28,7 +28,7 @@ for directory in directories:
 numThreads = int(sys.argv[3])
 threads = min(numThreads, len(directories))
 with FuturesSession(max_workers=numThreads) as session:
-    futures = [session.get(URI) for URI in URIS]
+    futures = [session.get(URI,allow_redirects=False) for URI in URIS]
     for future in as_completed(futures):
         if (future.result().status_code != 404):
             print("[+] " + future.result().url.replace(URL, "") + " - " + str(future.result().status_code))
